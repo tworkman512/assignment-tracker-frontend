@@ -10,6 +10,7 @@ import Navigation from "./shared/Navigation/Navigation";
 import FormContainer from "./auth/Container.Form";
 import Login from "./auth/Login.Form";
 import Signup from "./auth/Signup.Form";
+import LandingTest from "./ui-test/LandingTest";
 
 import * as auth from "../api/auth";
 
@@ -73,7 +74,7 @@ class App extends Component {
             exact
             render={() => {
               return this.state.currentUserId ? (
-                <Redirect to="/" /> // To-Do: redirect user to proper route based off permissions
+                <Redirect to="/users" /> // To-Do: redirect user to proper route based off permissions
               ) : (
                 <FormContainer>
                   <Login onSubmit={this.loginUser} />
@@ -86,7 +87,7 @@ class App extends Component {
             exact
             render={() => {
               return this.state.currentUserId ? (
-                <Redirect to="/" /> // To-Do: redirect user to proper route base off permissions
+                <Redirect to="/users" /> // To-Do: redirect user to proper route base off permissions
               ) : (
                 <FormContainer>
                   <Signup onSubmit={this.signupUser} />
@@ -94,16 +95,16 @@ class App extends Component {
               );
             }}
           />
-          {/* <Route
+          <Route
             path="/users"
             render={() => {
               return this.state.currentUserId ? (
-                <UsersContainer />
+                <LandingTest />
               ) : (
                 <Redirect to="/login" />
               );
             }}
-          /> */}
+          />
 
           <Redirect to="/login" />
         </Switch>
