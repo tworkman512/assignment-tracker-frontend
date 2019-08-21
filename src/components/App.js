@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Header from "./shared/Header";
 import Navigation from "./shared/Navigation/Navigation";
+import FormContainer from "./auth/Container.Form";
 import Login from "./auth/Login.Form";
 import Signup from "./auth/Signup.Form";
 
@@ -58,6 +59,7 @@ class App extends Component {
 
   render() {
     if (this.state.loading) return <p>Loading...</p>;
+
     return (
       <Router>
         <Header />
@@ -71,9 +73,11 @@ class App extends Component {
             exact
             render={() => {
               return this.state.currentUserId ? (
-                <Redirect to="/users" />
+                <Redirect to="/" /> // To-Do: redirect user to proper route based off permissions
               ) : (
-                <Login onSubmit={this.loginUser} />
+                <FormContainer>
+                  <Login onSubmit={this.loginUser} />
+                </FormContainer>
               );
             }}
           />
@@ -82,9 +86,11 @@ class App extends Component {
             exact
             render={() => {
               return this.state.currentUserId ? (
-                <Redirect to="/users" />
+                <Redirect to="/" /> // To-Do: redirect user to proper route base off permissions
               ) : (
-                <Signup onSubmit={this.signupUser} />
+                <FormContainer>
+                  <Signup onSubmit={this.signupUser} />
+                </FormContainer>
               );
             }}
           />
