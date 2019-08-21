@@ -19,6 +19,7 @@ class App extends Component {
     super();
     this.state = {
       currentUserId: null,
+      isAdmin: null,
       loading: true
     };
 
@@ -32,7 +33,10 @@ class App extends Component {
 
     if (token) {
       const profile = await auth.profile();
-      this.setState({ currentUserId: profile._id, loading: false });
+      this.setState({
+        currentUserId: profile._id,
+        loading: false
+      });
     } else {
       this.setState({ loading: false });
     }
@@ -41,20 +45,26 @@ class App extends Component {
   async loginUser(user) {
     const response = await auth.login(user);
     const profile = await auth.profile();
-    this.setState({ currentUserId: profile.user._id });
-    console.log("### user login:", response, profile);
+    this.setState({
+      currentUserId: profile.user._id,
+      isAdmin: profile.user.admin
+    });
+    // console.log("### user login:", response, profile);
   }
 
   async signupUser(user) {
     const response = await auth.signup(user);
     const profile = await auth.profile();
-    this.setState({ currentUserId: profile.user._id });
-    console.log("### user sign up:", response, profile);
-    console.log("Signing Up User:", user);
+    this.setState({
+      currentUserId: profile.user._id,
+      isAdmin: profile.user.admin
+    });
+    // console.log("### user sign up:", response, profile);
+    // console.log("Signing Up User:", user);
   }
 
   logoutUser = () => {
-    window.localStorage.removeItem("journal-app");
+    window.localStorage.removeItem("assignment-tracker-app");
     this.setState({ currentUserId: null });
   };
 
@@ -65,6 +75,7 @@ class App extends Component {
       <Router>
         <Header />
         <Navigation
+          isAdmin={this.state.isAdmin}
           currentUserId={this.state.currentUserId}
           logoutUser={this.logoutUser}
         />

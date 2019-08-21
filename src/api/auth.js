@@ -14,7 +14,7 @@ export const login = async user => {
   const json = await response.json();
   const token = json.token;
 
-  window.localStorage.setItem("journal-app", token);
+  window.localStorage.setItem("assignment-tracker-app", token);
   return json;
 };
 
@@ -29,12 +29,12 @@ export const signup = async user => {
   const json = await response.json();
   const token = json.token;
 
-  window.localStorage.setItem("journal-app", token);
+  window.localStorage.setItem("assignment-tracker-app", token);
   return json;
 };
 
 export const profile = async () => {
-  const token = window.localStorage.getItem("journal-app");
+  const token = window.localStorage.getItem("assignment-tracker-app");
   const response = await fetch(`${BASE_URL}/api/profile`, {
     headers: {
       "Content-Type": "application/json",
