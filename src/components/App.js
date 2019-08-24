@@ -85,7 +85,7 @@ class App extends Component {
             exact
             render={() => {
               return this.state.currentUserId ? (
-                <Redirect to="/users" /> // To-Do: redirect user to proper route based off permissions
+                <Redirect to="/students" /> // To-Do: redirect user to proper route based off permissions
               ) : (
                 <FormContainer>
                   <Login onSubmit={this.loginUser} />
@@ -98,7 +98,7 @@ class App extends Component {
             exact
             render={() => {
               return this.state.currentUserId ? (
-                <Redirect to="/users" /> // To-Do: redirect user to proper route base off permissions
+                <Redirect to="/students" /> // To-Do: redirect user to proper route based off permissions
               ) : (
                 <FormContainer>
                   <Signup onSubmit={this.signupUser} />
@@ -107,7 +107,7 @@ class App extends Component {
             }}
           />
           <Route
-            path="/users"
+            path="/students" // To-Do: redirect user to proper route based off permissions
             render={() => {
               return this.state.currentUserId ? (
                 <LandingTest />
