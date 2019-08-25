@@ -10,7 +10,10 @@ import Navigation from "./shared/Navigation/Navigation";
 import FormContainer from "./auth/Container.Form";
 import Login from "./auth/Login.Form";
 import Signup from "./auth/Signup.Form";
-import LandingTest from "./ui-test/LandingTest";
+// import LandingTest from "./ui-test/LandingTest";
+
+import AssignmentsContainer from "./assignments/Container";
+import StudentsContainer from "./students/Container";
 
 import * as auth from "../api/auth";
 
@@ -107,10 +110,12 @@ class App extends Component {
             }}
           />
           <Route
-            path="/students" // To-Do: redirect user to proper route based off permissions
+            path="/" // To-Do: redirect user to proper route based off permissions
             render={() => {
               return this.state.currentUserId ? (
-                <LandingTest />
+                <>
+                  <StudentsContainer />
+                </>
               ) : (
                 <Redirect to="/login" />
               );

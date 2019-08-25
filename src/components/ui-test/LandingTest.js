@@ -9,7 +9,7 @@ export default class Container extends Component {
   render() {
     return (
       <main className="container">
-        <h1>Landing Page</h1>
+        <h1>STUDENT ASSIGNMENT LANDING PAGE</h1>
       </main>
     );
   }
