@@ -17,13 +17,15 @@ export default class Container extends React.Component {
     };
   }
 
-  async componentDidMount() {
-    const token = window.localStorage.getItem("assignment-tracker-app");
-    if (token) {
-      const assignments = await api.getAllAssignments();
-      this.setState({ assignments });
-    }
-  }
+  // async componentDidMount() {
+  //   const token = window.localStorage.getItem("assignment-tracker-app");
+  //   const { currentUserId } = this.props;
+  //   console.log("### did we receive the props -->", currentUserId);
+  //   if (token) {
+  //     const assignments = await api.getAllAssignments(currentUserId);
+  //     this.setState({ assignments });
+  //   }
+  // }
 
   // render() {
   //   const { assignments } = this.state;
@@ -40,19 +42,25 @@ export default class Container extends React.Component {
   // }
 
   render() {
-    const { currentUserId, users } = this.props;
+    const { currentUserId, currentUserAssignments } = this.props;
+    console.log(
+      "### DID THIS RENDER currentUserAssignments??? -->",
+      currentUserAssignments
+    );
     return (
       <>
         <Route
-          path="/student/:studentId/assignments"
+          // path="/student/:studentId/assignments"
+          path={`/students/${currentUserId}/assignments`}
+          // path="/student/:studentId"
           exact
           component={({ match }) => {
-            const user = users.find(user => user._id === match.params.userId);
+            // const user = users.find(user => user._id === match.params.userId);
             return (
               <List
                 currentUserId={currentUserId}
                 destroyPost={this.destroyPost}
-                user={user}
+                currentUserAssignments={currentUserAssignments}
               />
             );
           }}

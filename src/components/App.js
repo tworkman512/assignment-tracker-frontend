@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -17,11 +17,13 @@ import StudentsContainer from "./students/Container";
 
 import * as auth from "../api/auth";
 
-class App extends Component {
+class App extends PureComponent {
   constructor() {
     super();
     this.state = {
       currentUserId: null,
+      currentUser: null,
+      currentUserAssignments: null,
       isAdmin: null,
       loading: true
     };
@@ -38,6 +40,8 @@ class App extends Component {
       const profile = await auth.profile();
       this.setState({
         currentUserId: profile._id,
+        currentUser: profile,
+        currentUserAssignments: profile.assignments,
         isAdmin: profile.admin,
         loading: false
       });
@@ -51,6 +55,8 @@ class App extends Component {
     const profile = await auth.profile();
     this.setState({
       currentUserId: profile.user._id,
+      currentUser: profile.user,
+      currentUserAssignments: profile.user.assignments,
       isAdmin: profile.user.admin
     });
     console.log("### user login:", response, profile);
@@ -75,8 +81,8 @@ class App extends Component {
   render() {
     const { currentUserId, isAdmin } = this.state; // I think I need to pass this down after login
     if (this.state.loading) return <p>Loading...</p>;
-    console.log("### TOM TEST for currentUserId? -->", currentUserId);
-    console.log("### TOM TEST for isAdmin? -->", isAdmin);
+    // console.log("### TOM TEST for currentUserId? -->", currentUserId);
+    // console.log("### TOM TEST for isAdmin? -->", isAdmin);
     return (
       <Router>
         <Header />
@@ -96,6 +102,7 @@ class App extends Component {
               if (this.state.currentUserId && !this.state.isAdmin) {
                 return (
                   <Redirect to={`/students/${currentUserId}/assignments`} />
+                  // <Redirect to={`/students/${currentUserId}`} />
                 );
               }
               return (
@@ -129,16 +136,39 @@ class App extends Component {
           <Route
             path="/"
             render={() => {
-              return this.state.currentUserId ? (
-                <>
-                  <StudentsContainer currentUserId={this.state.currentUserId} />
-                </>
-              ) : (
-                <Redirect to="/login" />
-              );
+              // Start TEST
+              if (this.state.currentUserId && this.state.isAdmin) {
+                return (
+                  <StudentsContainer
+                    currentUserId={this.state.currentUserId}
+                    isAdmin={this.state.isAdmin}
+                  />
+                );
+              }
+              if (this.state.currentUserId && !this.state.isAdmin) {
+                return (
+                  <AssignmentsContainer
+                    currentUserId={this.state.currentUserId}
+                    currentUser={this.state.currentUser}
+                    currentUserAssignments={this.state.currentUserAssignments}
+                    isAdmin={this.state.isAdmin}
+                  />
+                );
+              }
+              return <Redirect to="/login" />;
+              // End TEST
+              // return this.state.currentUserId ? (
+              //   <>
+              //     <StudentsContainer
+              //       currentUserId={this.state.currentUserId}
+              //       isAdmin={this.state.isAdmin}
+              //     />
+              //   </>
+              // ) : (
+              //   <Redirect to="/login" />
+              // );
             }}
           />
-
           <Redirect to="/login" />
         </Switch>
       </Router>

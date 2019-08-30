@@ -9,7 +9,8 @@ export default class Container extends React.Component {
     super(props);
     this.state = {
       users: [],
-      currentUserId: null
+      currentUserId: null,
+      isAdmin: null
       // users: [{ posts: [] }]
       // users: [
       //   {
@@ -46,9 +47,10 @@ export default class Container extends React.Component {
   // state
 
   render() {
-    const { users, currentUserId } = this.state;
-    console.log("### WHAT IS HAPPENING? -->", users);
+    const { users, currentUserId, isAdmin } = this.state;
+    console.log("### WHAT IS HAPPENING my users? -->", users);
     console.log("### currentUserId? -->", currentUserId);
+    console.log("### isAdmin? -->", isAdmin);
     return (
       <main className="container">
         <Route

@@ -1,12 +1,12 @@
 import React from "react";
 
-export default ({ assignments }) => {
+export default ({ currentUserAssignments }) => {
   const cardCustom = {
     marginTop: "8px",
     marginBottom: "8px"
   };
 
-  const list = assignments.map(assignment => (
+  const list = currentUserAssignments.map(assignment => (
     <div key={assignment._id} className="card" style={cardCustom}>
       <div className="card-body">
         <span className="font-weight-bold">
@@ -19,7 +19,7 @@ export default ({ assignments }) => {
   return (
     <>
       <h1>All Assignments</h1>
-      {/* <div>{list}</div> */}
+      <div>{list}</div>
       <div>LIST WILL GO HERE</div>
     </>
   );
