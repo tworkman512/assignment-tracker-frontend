@@ -109,9 +109,17 @@ class App extends Component {
             path="/signup"
             exact
             render={() => {
-              return this.state.currentUserId ? (
-                <Redirect to="/students" /> // To-Do: redirect user to proper route based off permissions
-              ) : (
+              // By default new signups will be Students for now...
+              if (this.state.currentUserId && this.state.isAdmin) {
+                return <Redirect to="/students" />;
+              }
+              if (this.state.currentUserId && !this.state.isAdmin) {
+                return (
+                  // If Students are brand new and don't have any assignments, they should see something...
+                  <Redirect to={`/students/${currentUserId}/assignments`} />
+                );
+              }
+              return (
                 <FormContainer>
                   <Signup onSubmit={this.signupUser} />
                 </FormContainer>
@@ -119,7 +127,7 @@ class App extends Component {
             }}
           />
           <Route
-            path="/" // To-Do: redirect user to proper route based off permissions
+            path="/"
             render={() => {
               return this.state.currentUserId ? (
                 <>
