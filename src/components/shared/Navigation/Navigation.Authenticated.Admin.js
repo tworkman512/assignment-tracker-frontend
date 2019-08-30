@@ -19,17 +19,23 @@ const AuthenticatedLinks = ({ currentUserId, logoutUser, history }) => {
     <div style={navWrapper}>
       <ul className="nav justify-content-start">
         <li className="nav-item">
-          <Link className="nav-link" to="/users">
+          <Link className="nav-link" to="/students">
             All Students
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to={`/users/${currentUserId}/posts/new`}>
+          <Link
+            className="nav-link"
+            to={`/students/${currentUserId}/posts/new`}
+          >
             Ungraded Assignments
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to={`/users/${currentUserId}/posts/new`}>
+          <Link
+            className="nav-link"
+            to={`/students/${currentUserId}/posts/new`}
+          >
             Graded Assignments
           </Link>
         </li>

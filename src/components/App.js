@@ -38,6 +38,7 @@ class App extends Component {
       const profile = await auth.profile();
       this.setState({
         currentUserId: profile._id,
+        isAdmin: profile.admin,
         loading: false
       });
     } else {
@@ -52,7 +53,7 @@ class App extends Component {
       currentUserId: profile.user._id,
       isAdmin: profile.user.admin
     });
-    // console.log("### user login:", response, profile);
+    console.log("### user login:", response, profile);
   }
 
   async signupUser(user) {
@@ -68,12 +69,14 @@ class App extends Component {
 
   logoutUser = () => {
     window.localStorage.removeItem("assignment-tracker-app");
-    this.setState({ currentUserId: null });
+    this.setState({ currentUserId: null, isAdmin: null });
   };
 
   render() {
+    const { currentUserId, isAdmin } = this.state; // I think I need to pass this down after login
     if (this.state.loading) return <p>Loading...</p>;
-
+    console.log("### TOM TEST for currentUserId? -->", currentUserId);
+    console.log("### TOM TEST for isAdmin? -->", isAdmin);
     return (
       <Router>
         <Header />
@@ -87,9 +90,15 @@ class App extends Component {
             path="/login"
             exact
             render={() => {
-              return this.state.currentUserId ? (
-                <Redirect to="/students" /> // To-Do: redirect user to proper route based off permissions
-              ) : (
+              if (this.state.currentUserId && this.state.isAdmin) {
+                return <Redirect to="/students" />;
+              }
+              if (this.state.currentUserId && !this.state.isAdmin) {
+                return (
+                  <Redirect to={`/students/${currentUserId}/assignments`} />
+                );
+              }
+              return (
                 <FormContainer>
                   <Login onSubmit={this.loginUser} />
                 </FormContainer>
@@ -114,7 +123,7 @@ class App extends Component {
             render={() => {
               return this.state.currentUserId ? (
                 <>
-                  <StudentsContainer />
+                  <StudentsContainer currentUserId={this.state.currentUserId} />
                 </>
               ) : (
                 <Redirect to="/login" />
