@@ -7,7 +7,6 @@ export const getAllAssignments = async studentId => {
   const token = window.localStorage.getItem("assignment-tracker-app");
   const response = await fetch(
     `${BASE_URL}/api/students/${studentId}/assignments`,
-    // `${BASE_URL}/api/students/${studentId}`,
     {
       headers: {
         "Content-Type": "application/json",

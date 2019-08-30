@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from "react";
+import React, { Component } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -10,7 +10,6 @@ import Navigation from "./shared/Navigation/Navigation";
 import FormContainer from "./auth/Container.Form";
 import Login from "./auth/Login.Form";
 import Signup from "./auth/Signup.Form";
-// import LandingTest from "./ui-test/LandingTest";
 
 import AssignmentsContainer from "./assignments/Container";
 import StudentsContainer from "./students/Container";
@@ -69,8 +68,6 @@ class App extends Component {
       currentUserId: profile.user._id,
       isAdmin: profile.user.admin
     });
-    // console.log("### user sign up:", response, profile);
-    // console.log("Signing Up User:", user);
   }
 
   logoutUser = () => {
@@ -79,10 +76,8 @@ class App extends Component {
   };
 
   render() {
-    const { currentUserId, isAdmin } = this.state; // I think I need to pass this down after login
+    const { currentUserId, isAdmin } = this.state;
     if (this.state.loading) return <p>Loading...</p>;
-    // console.log("### TOM TEST for currentUserId? -->", currentUserId);
-    // console.log("### TOM TEST for isAdmin? -->", isAdmin);
     return (
       <Router>
         <Header />
@@ -102,7 +97,6 @@ class App extends Component {
               if (this.state.currentUserId && !this.state.isAdmin) {
                 return (
                   <Redirect to={`/students/${currentUserId}/assignments`} />
-                  // <Redirect to={`/students/${currentUserId}`} />
                 );
               }
               return (
@@ -116,13 +110,11 @@ class App extends Component {
             path="/signup"
             exact
             render={() => {
-              // By default new signups will be Students for now...
               if (this.state.currentUserId && this.state.isAdmin) {
                 return <Redirect to="/students" />;
               }
               if (this.state.currentUserId && !this.state.isAdmin) {
                 return (
-                  // If Students are brand new and don't have any assignments, they should see something...
                   <Redirect to={`/students/${currentUserId}/assignments`} />
                 );
               }
@@ -136,7 +128,7 @@ class App extends Component {
           <Route
             path="/"
             render={() => {
-              // Start TEST
+              // Start TEST - I suspect this is what broke my Student UI nav
               if (this.state.currentUserId && this.state.isAdmin) {
                 return (
                   <StudentsContainer
