@@ -9,9 +9,9 @@ export default ({ currentUserAssignments }) => {
   const list = currentUserAssignments.map(assignment => (
     <div key={assignment._id} className="card" style={cardCustom}>
       <div className="card-body">
-        <span className="font-weight-bold">
-          {`${assignment.title} ${assignment.description} ${assignment.link}`}
-        </span>
+        <h4 className="font-weight-bold">{`${assignment.title}`}</h4>
+        <p>{`${assignment.projectDescription}`}</p>
+        <p>{`${assignment.projectLink}`}</p>
       </div>
     </div>
   ));
@@ -20,7 +20,6 @@ export default ({ currentUserAssignments }) => {
     <>
       <h1>All Assignments</h1>
       <div>{list}</div>
-      <div>LIST WILL GO HERE</div>
     </>
   );
 };

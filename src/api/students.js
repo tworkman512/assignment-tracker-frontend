@@ -17,17 +17,20 @@ export const getAllUsers = async () => {
   return json.response;
 };
 
-// TEST
-// export const getCurrentUser = async () => {
-//   const token = window.localStorage.getItem("assignment-tracker-app");
-//   const response = await fetch(`${BASE_URL}/api/students/${user._id}`, {
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${token}`
-//     },
-//     method: "GET"
-//   });
-//   const json = await response.json();
-//   console.log("### log out getCurrentUser response", json);
-//   return json.response;
-// };
+export const getAllAssignments = async studentId => {
+  const token = window.localStorage.getItem("assignment-tracker-app");
+  const response = await fetch(
+    `${BASE_URL}/api/students/${studentId}/assignments`,
+    // `${BASE_URL}/api/students/${studentId}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      method: "GET"
+    }
+  );
+  const json = await response.json();
+  console.log("### log out getAllAssignments response", json);
+  return json.response;
+};

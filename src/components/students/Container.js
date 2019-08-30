@@ -1,31 +1,17 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import List from "./List/List";
 import * as api from "../../api/students";
 
-export default class Container extends React.Component {
+class Container extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       users: [],
       currentUserId: null,
       isAdmin: null
-      // users: [{ posts: [] }]
-      // users: [
-      //   {
-      //     _id: "5de4",
-      //     username: "example.user",
-      //     posts: [
-      //       {
-      //         _id: "6cj2",
-      //         content: "This is an example post.",
-      //         emotion: "joy",
-      //         created_at: new Date("2019-07-01")
-      //       }
-      //     ]
-      //   }
-      // ]
     };
   }
 
@@ -33,18 +19,10 @@ export default class Container extends React.Component {
     const token = window.localStorage.getItem("assignment-tracker-app");
     if (token) {
       const users = await api.getAllUsers();
+      console.log(users);
       this.setState({ users });
     }
   }
-
-  // removePost
-  // -- would remove a single post from the state;
-  // calling setState()
-
-  // refetchState
-  // -- would refetch the entire state ( a resource ),
-  // and set that state, overwriting the previous
-  // state
 
   render() {
     const { users, currentUserId, isAdmin } = this.state;
@@ -56,9 +34,11 @@ export default class Container extends React.Component {
         <Route
           path="/students"
           exact
-          component={() => <List users={users} />}
+          component={({ match }) => <List users={users} />}
         />
       </main>
     );
   }
 }
+
+export default withRouter(Container);

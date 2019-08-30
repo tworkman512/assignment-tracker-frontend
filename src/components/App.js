@@ -17,7 +17,7 @@ import StudentsContainer from "./students/Container";
 
 import * as auth from "../api/auth";
 
-class App extends PureComponent {
+class App extends Component {
   constructor() {
     super();
     this.state = {
